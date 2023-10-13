@@ -21,35 +21,6 @@ export default function Products() {
     setLoading(false);
   }
 
-  function search() {
-    let filteredProducts = Products.filter((Product) =>
-      Product.title.toLowerCase().includes(inputRef.current.value.toLowerCase())
-    );
-
-    document.querySelector(".row").innerHTML = `
-      ${filteredProducts
-        .map((Product) => {
-          return `
-          <div class="col" key=${Product._id}>
-            <div class="card h-100">
-              <img
-                src=${Product.imageCover}
-                class="card-img-top w-100"
-                alt=${Product.title}
-              />
-              <div class="card-body">
-                <h5 class="text-main fw-bolder text-center display-one-line">
-                  ${Product.title}
-                </h5>
-              </div>
-            </div>
-          </div>
-        `;
-        })
-        .join("")}
-    `;
-  }
-
   return (
     <>
       <Helmet>

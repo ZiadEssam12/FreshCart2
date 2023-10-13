@@ -111,7 +111,7 @@ export default function WishList() {
                             />
                           </div>
                         </div>
-                        <div className="col-4 col-md-9">
+                        <div className="col-8 col-md-9">
                           <p className="fw-bolder">{item?.title}</p>
                           <p className="text-main">
                             Price : {item?.price} EGP{" "}
@@ -126,12 +126,12 @@ export default function WishList() {
                             Remove
                           </button>
                         </div>
-                        <div className="col-4 col-md-2 d-flex align-items-center justify-content-end">
+                        <div className="col-12 col-md-2 mt-3 mt-md-0 d-flex align-items-center justify-content-end p-0">
                           <button
                             onClick={() => {
                               addToCart(item?.id);
                             }}
-                            className="btn bg-main text-white w-100"
+                            className="btn bg-main text-white form-control"
                           >
                             Add to card
                           </button>

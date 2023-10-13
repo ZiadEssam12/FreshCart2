@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 export default function AllOrders() {
   let [orders, setOrders] = useState([]);
   let { userid } = useContext(userId);
+
   let [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
@@ -14,10 +15,10 @@ export default function AllOrders() {
   async function getAllOrders() {
     await axios
       .get(
-        `https://ecommerce.routemisr.com/api/v1/orders/user/65204f7fd9b88f4e3d784178/`
+        `https://ecommerce.routemisr.com/api/v1/orders/user/65280ae237e4974476fa5793/`
       )
       .then((res) => {
-        setOrders(res.data[0]);
+        setOrders(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -35,56 +36,61 @@ export default function AllOrders() {
           </div>
         </div>
       ) : (
-        <div className="py-5 my-5">
+        <div className="my-5">
           <h1>Orders:</h1>
-          <h2 className="h5 d-flex justify-content-between">
-            <span className="text-main">
-              Total Order Price {orders?.totalOrderPrice} EGP
-            </span>
-            <span>Payment Method Type {orders?.paymentMethodType}</span>
-          </h2>
 
           <div className="row justify-content-center align-items-center row-gap-2 mt-3">
-            {orders?.cartItems?.map((order) => {
-              return (
-                <div className="col-12 shadow-sm" key={order._id}>
-                  <Link
-                    className="order text-decoration-none text-dark"
-                    to={`/DisplayProduct/${order.product._id}`}
+            {orders.map((order) => (
+              <div className="my-3 bg-main-light shadow-sm p-4" key={order.id}>
+                <h2 className="h5 d-flex justify-content-between font-16">
+                  <span className="text-main">
+                    Total Order Price {order?.totalOrderPrice} EGP
+                  </span>
+                  <span>Payment Method Type {order?.paymentMethodType}</span>
+                </h2>
+                {order.cartItems.map((item) => (
+                  <div
+                    className="col-12 my-2 boder py-4 border-bottom border-1"
+                    key={item.product._id}
                   >
-                    <div className="row justify-content-center align-items-center">
-                      <div className="col-2">
-                        <img
-                          src={order?.product.imageCover}
-                          height={250}
-                          className="w-100"
-                          alt="Woman Shawl"
-                        />
-                      </div>
-                      <div className="col-10">
-                        <div>
-                          <h3>{order?.product.title}</h3>
-                          <h4 className="text-main font-sm">
-                            {order?.category?.name}
-                          </h4>
-                          <h5 className="d-flex justify-content-between py-2">
-                            <span>count: {order?.count}</span>
-                            <span className="text-main">
-                              Price: {order?.price * order?.count} EGP
-                            </span>
-                          </h5>
+                    <Link
+                      className="order text-decoration-none text-dark"
+                      to={`/DisplayProduct/${item.product._id}`}
+                    >
+                      <div className="row justify-content-center align-items-center">
+                        <div className="col-6 col-md-2">
+                          <img
+                            src={item?.product.imageCover}
+                            height={250}
+                            className="w-100"
+                            alt="Woman Shawl"
+                          />
+                        </div>
+                        <div className="col-6 col-md-10">
+                          <div>
+                            <h3>{item?.product.title}</h3>
+                            <h4 className="text-main font-sm">
+                              {item?.category?.name}
+                            </h4>
+                            <h5 className="d-flex flex-column flex-md-row justify-content-between py-2">
+                              <span>count: {item?.count}</span>
+                              <span className="text-main mt-3 mt-md-0">
+                                Price: {item?.price * item?.count} EGP
+                              </span>
+                            </h5>
 
-                          <h6 className="h5 mt-3">
-                            4.8
-                            <i className="fa-solid fa-star rating-color"></i>
-                          </h6>
+                            <h6 className="h5 mt-3">
+                              {item?.product?.ratingsAverage}
+                              <i className="fa-solid fa-star rating-color"></i>
+                            </h6>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Link>
-                </div>
-              );
-            })}
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       )}

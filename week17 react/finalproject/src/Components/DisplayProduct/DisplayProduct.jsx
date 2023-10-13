@@ -6,13 +6,14 @@ import { userContext } from "../../Context/UserContaxt";
 import toast from "react-hot-toast";
 import { Helmet } from "react-helmet";
 import { wishContext } from "../../Context/WishlistContext";
+import { userId } from "../../Context/UserIDContext";
 export default function DisplayProduct() {
   let { id } = useParams();
   let [productInfo, setProduct] = useState({});
   let [loading, setLoading] = useState(false);
-  let [quantity, setQuantity] = useState(1);
   let { userToken } = useContext(userContext);
   let { wishList, setWishList } = useContext(wishContext);
+  let { cart, setCart } = useContext(userId);
 
   useEffect(() => {
     {
@@ -30,15 +31,19 @@ export default function DisplayProduct() {
   async function addToCart(id) {
     toast.success("Product added successfully to your cart");
 
-    await axios.post(
-      `https://ecommerce.routemisr.com/api/v1/cart`,
-      { productId: id },
-      {
-        headers: {
-          token: userToken,
-        },
-      }
-    );
+    await axios
+      .post(
+        `https://ecommerce.routemisr.com/api/v1/cart`,
+        { productId: id },
+        {
+          headers: {
+            token: userToken,
+          },
+        }
+      )
+      .then((res) => {
+        setCart(res.data.data.products);
+      });
   }
 
   async function addToWishList(id) {
@@ -60,7 +65,7 @@ export default function DisplayProduct() {
   return (
     <>
       <Helmet>
-        <title>productInfo?.title</title>
+        <title>{productInfo?.title}</title>
       </Helmet>
       {loading ? (
         <div className="d-flex justify-content-center align-items-center vh-100 py-5">
@@ -91,8 +96,8 @@ export default function DisplayProduct() {
                 {productInfo?.ratingsAverage}
               </p>
             </h4>
-            <div class="row justify-content-between align-items-center g-2 p-0">
-              <div class="col-10 p-0">
+            <div className="row justify-content-between align-items-center g-2 p-0">
+              <div className="col-10 p-0">
                 <button
                   onClick={() => {
                     addToCart(id);
@@ -102,7 +107,7 @@ export default function DisplayProduct() {
                   Add to card
                 </button>
               </div>
-              <div class="col-1 p-0">
+              <div className="col-1 p-0">
                 <button
                   onClick={() => {
                     addToWishList(id);
@@ -110,7 +115,7 @@ export default function DisplayProduct() {
                   className="btn text-black w-100  d-flex justify-content-center"
                 >
                   {wishList.includes(id) ? (
-                    <i class="fa-solid fa-heart red-icon icon-font"></i>
+                    <i className="fa-solid fa-heart red-icon icon-font"></i>
                   ) : (
                     <i className="fas fa-heart text-black icon-font" />
                   )}

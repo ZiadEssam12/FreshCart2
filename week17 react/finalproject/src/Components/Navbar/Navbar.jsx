@@ -33,12 +33,7 @@ export default function Navbar() {
                   Home <span className="visually-hidden">(current)</span>
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"/cart"}>
-                  <i className="fa-solid fa-cart-shopping fs-5"></i>{" "}
-                  <sup className="fw-bolder fs-5">{cart.length}</sup>
-                </Link>
-              </li>
+
               <li className="nav-item">
                 <Link className="nav-link" to={"/Wishlist"}>
                   Wishlist
@@ -68,7 +63,7 @@ export default function Navbar() {
           ) : null}
           <ul className="navbar-nav list-unstyled me-4 ms-auto mt-2 mt-lg-0 d-flex flex-column flex-md-row">
             <li className="nav-item">
-              <ul className="list-unstyled d-md-none  d-lg-flex ">
+              <ul className="list-unstyled d-flex flex-row d-md-none  d-lg-flex ">
                 <li>
                   <a className="nav-link cursor-pointer me-2" to={"/"}>
                     <i className="fa-brands fa-instagram"></i>
@@ -98,6 +93,12 @@ export default function Navbar() {
                   <a className="nav-link cursor-pointer me-2" to={"/"}>
                     <i className="fa-brands fa-youtube"></i>
                   </a>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/cart"}>
+                    <i className="fa-solid fa-cart-shopping fs-5"></i>{" "}
+                    <sup className="fw-bolder fs-5">{cart.length}</sup>
+                  </Link>
                 </li>
               </ul>
             </li>

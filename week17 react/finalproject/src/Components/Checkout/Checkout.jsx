@@ -117,7 +117,7 @@ export default function Checkout() {
                 type="submit"
                 className="btn bg-main text-white mt-2"
               >
-                Send Code
+                Pay Now
               </button>
             )}
           </div>
