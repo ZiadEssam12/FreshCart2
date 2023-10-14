@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/FreshCart2/static/css/main.c5399dba.css",
-    "main.js": "/FreshCart2/static/js/main.7885d84e.js",
+    "main.js": "/FreshCart2/static/js/main.1acb6eba.js",
     "static/media/fa-solid-900.ttf": "/FreshCart2/static/media/fa-solid-900.d75e3fd1eb12e9bd6655.ttf",
     "static/media/slider-image-1.jpeg": "/FreshCart2/static/media/slider-image-1.3c3940ee0f1c3b17ff9a.jpeg",
     "static/media/assortment-citrus-fruits.png": "/FreshCart2/static/media/assortment-citrus-fruits.2a7b348c0ee4a126fb83.png",
@@ -28,10 +28,10 @@
     "static/media/slick.woff": "/FreshCart2/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/FreshCart2/index.html",
     "main.c5399dba.css.map": "/FreshCart2/static/css/main.c5399dba.css.map",
-    "main.7885d84e.js.map": "/FreshCart2/static/js/main.7885d84e.js.map"
+    "main.1acb6eba.js.map": "/FreshCart2/static/js/main.1acb6eba.js.map"
   },
   "entrypoints": [
     "static/css/main.c5399dba.css",
-    "static/js/main.7885d84e.js"
+    "static/js/main.1acb6eba.js"
   ]
 }
