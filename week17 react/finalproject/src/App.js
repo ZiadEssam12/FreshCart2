@@ -27,7 +27,7 @@ import Checkout from "./Components/Checkout/Checkout";
 import AllOrders from "./Components/allOrders/AllOrders";
 import UserIdContextProvider from "./Context/UserIDContext";
 
-let routes = createBrowserRouter([
+let routes = createHashRouter([
   {
     path: "/",
     element: <Layout />,

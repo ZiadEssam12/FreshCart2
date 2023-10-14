@@ -28,7 +28,7 @@ export default function Checkout() {
   let url = "";
   async function handleSubmit(values) {
     if (paymentOption1.current.checked) {
-      url = `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartOwner}?url=http://localhost:3000/`;
+      url = `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartOwner}`;
     } else if (paymentOption2.current.checked) {
       url = `https://ecommerce.routemisr.com/api/v1/orders/${cartOwner}`;
     } else {
@@ -39,6 +39,8 @@ export default function Checkout() {
     setLoading(true);
     await axios
       .post(url, values, {
+        params: { url: "https://ziadessam12.github.io/FreshCart2/#" },
+
         headers: {
           token: userToken,
         },
