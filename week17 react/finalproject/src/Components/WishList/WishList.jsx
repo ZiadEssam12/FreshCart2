@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import toast from "react-hot-toast";
 import { wishContext } from "../../Context/WishlistContext";
+import { userId } from "../../Context/UserIDContext";
 
 export default function WishList() {
   let [wishlist, setWishlist] = useState([]);
@@ -13,6 +14,8 @@ export default function WishList() {
   let { userToken } = useContext(userContext);
   let [loading, setLoading] = useState(false);
   let [error, setError] = useState("");
+  let { cart, setCart } = useContext(userId);
+
   useEffect(() => {
     setLoading(true);
     getUserWishlist();
@@ -46,7 +49,11 @@ export default function WishList() {
           },
         }
       )
-      .then(() => {});
+      .then((res) => {
+        setCart(res.data.data.products);
+      })
+      .catch((err) => {
+      });
   }
   async function removeItemFromWishlist(id) {
     toast.success("Item Removed From Wishlist");
