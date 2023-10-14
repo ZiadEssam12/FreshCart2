@@ -3,6 +3,7 @@ import { userId } from "../../Context/UserIDContext";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import { Helmet } from "react-helmet";
 
 export default function AllOrders() {
   let [orders, setOrders] = useState([]);
@@ -32,6 +33,9 @@ export default function AllOrders() {
   }
   return (
     <>
+      <Helmet>
+        <title>Orders</title>
+      </Helmet>
       {loading ? (
         <div className="d-flex justify-content-center align-items-center py-5">
           <div className="spinner-border text-main" role="status">
