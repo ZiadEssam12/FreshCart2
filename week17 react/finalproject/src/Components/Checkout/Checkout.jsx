@@ -22,7 +22,7 @@ export default function Checkout() {
     setLoading(true);
     await axios
       .post(
-        `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartOwner}?url=http://localhost:3000/`,
+        `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartOwner}?url=https://ziadessam12.github.io/FreshCart2/`,
         values,
         {
           headers: {

@@ -10,21 +10,23 @@ export default function AllOrders() {
   let [loading, setLoading] = useState(false);
   // let userToken = Cookies.get("userToken");
   useEffect(() => {
-    setLoading(true);
-    getUserID();
-    getAllOrders();
-  }, []);
+    if (userid) {
+      setLoading(true);
+      getAllOrders();
+    }
+  }, [userid]);
 
   async function getAllOrders() {
-    await axios
-      .get(`https://ecommerce.routemisr.com/api/v1/orders/user/${userid}/`)
-      .then((res) => {
-        setOrders(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(false);
-      });
+    try {
+      const res = await axios.get(
+        `https://ecommerce.routemisr.com/api/v1/orders/user/${userid}/`
+      );
+      setOrders(res.data);
+    } catch (err) {
+      // handle error
+    } finally {
+      setLoading(false);
+    }
   }
   return (
     <>
@@ -36,7 +38,8 @@ export default function AllOrders() {
             </span>
           </div>
         </div>
-      ) : (
+      ) : null}
+      {userid && !loading ? (
         <div className="my-5">
           <h1>Orders:</h1>
 
@@ -94,7 +97,7 @@ export default function AllOrders() {
             ))}
           </div>
         </div>
-      )}
+      ) : null}
     </>
   );
 }

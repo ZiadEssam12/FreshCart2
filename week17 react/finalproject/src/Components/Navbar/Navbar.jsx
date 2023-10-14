@@ -62,7 +62,7 @@ export default function Navbar() {
                   id="spinner"
                 >
                   <span className="visually-hidden">
-                    <i className="fas fa-spinner fa-spin position-absolute fa-sm"></i>
+                    <i className="fas fa-spinner fa-spin position-absolute fa-3x"></i>
                   </span>
                 </div>
               ) : (
