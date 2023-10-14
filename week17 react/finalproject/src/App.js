@@ -111,7 +111,15 @@ let routes = createHashRouter([
         ),
       },
       {
-        path: "/allorders",
+        index: "/allorders",
+        element: (
+          <ProtectedRoute>
+            <Navigate to={"/AllOrders"} />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/allOrders",
         element: (
           <ProtectedRoute>
             <AllOrders />

@@ -15,6 +15,7 @@ export default function Cart() {
   let [error, setError] = useState("");
   let navigate = useNavigate();
   let { cart: cartItems, setCart: setCartItems } = useContext(userId);
+  // let { userid, getUserID } = useContext(userId);
 
   useEffect(() => {
     setLoading(true);

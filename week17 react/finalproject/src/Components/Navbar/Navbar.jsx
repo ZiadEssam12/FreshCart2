@@ -6,7 +6,8 @@ import Cookies from "js-cookie";
 import { userId } from "../../Context/UserIDContext";
 export default function Navbar() {
   let { userToken, setUserToken } = useContext(userContext);
-  let { cart } = useContext(userId);
+  let { cart, setUserID, userid } = useContext(userId);
+
   const navigate = useNavigate();
   return (
     <nav className="navbar navbar-expand-md navbar-light bg-light fixed-top">
@@ -54,11 +55,23 @@ export default function Navbar() {
                   Brands
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={"/allorders"}>
-                  Orders
-                </Link>
-              </li>
+              {!userid ? (
+                <div
+                  className="ms-3 spinner-border text-main"
+                  role="status"
+                  id="spinner"
+                >
+                  <span className="visually-hidden">
+                    <i className="fas fa-spinner fa-spin position-absolute fa-sm"></i>
+                  </span>
+                </div>
+              ) : (
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/allOrders"}>
+                    Orders
+                  </Link>
+                </li>
+              )}
             </ul>
           ) : null}
           <ul className="navbar-nav list-unstyled me-4 ms-auto mt-2 mt-lg-0 d-flex flex-column flex-md-row">
@@ -94,12 +107,14 @@ export default function Navbar() {
                     <i className="fa-brands fa-youtube"></i>
                   </a>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/cart"}>
-                    <i className="fa-solid fa-cart-shopping fs-5"></i>{" "}
-                    <sup className="fw-bolder fs-5">{cart.length}</sup>
-                  </Link>
-                </li>
+                {userToken ? (
+                  <li className="nav-item">
+                    <Link className="nav-link" to={"/cart"}>
+                      <i className="fa-solid fa-cart-shopping fs-5"></i>{" "}
+                      <sup className="fw-bolder fs-5">{cart.length}</sup>
+                    </Link>
+                  </li>
+                ) : null}
               </ul>
             </li>
             {userToken ? (
@@ -109,6 +124,7 @@ export default function Navbar() {
                   onClick={() => {
                     Cookies.remove("userToken");
                     setUserToken(null);
+                    setUserID(null);
                     navigate("/login");
                   }}
                 >

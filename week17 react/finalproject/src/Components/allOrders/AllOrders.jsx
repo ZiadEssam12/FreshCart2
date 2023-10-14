@@ -2,16 +2,19 @@ import React, { useContext, useEffect, useState } from "react";
 import { userId } from "../../Context/UserIDContext";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export default function AllOrders() {
   let [orders, setOrders] = useState([]);
-  let { userid } = useContext(userId);
-
+  let { userid, getUserID } = useContext(userId);
   let [loading, setLoading] = useState(false);
+  // let userToken = Cookies.get("userToken");
   useEffect(() => {
     setLoading(true);
+    getUserID();
     getAllOrders();
   }, []);
+
   async function getAllOrders() {
     await axios
       .get(`https://ecommerce.routemisr.com/api/v1/orders/user/${userid}/`)

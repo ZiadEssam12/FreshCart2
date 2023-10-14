@@ -8,6 +8,7 @@ export default function UserIdContextProvider({ children }) {
   let [userid, setUserID] = useState("");
   let [cart, setCart] = useState([]);
   let userToken = Cookies.get("userToken");
+
   async function getUserID() {
     await axios
       .get(`https://ecommerce.routemisr.com/api/v1/cart`, {
@@ -20,15 +21,16 @@ export default function UserIdContextProvider({ children }) {
         setUserID(res.data.data.cartOwner);
       })
       .catch((err) => {
-        console.log(err);
-        setUserID(err.response.data.message.split(":")[1]);
+        setUserID(
+          err.response.data.message.split("No cart exist for this user: ")[1]
+        );
       });
   }
   useEffect(() => {
     getUserID();
   }, []);
   return (
-    <userId.Provider value={{ userid, cart, setCart }}>
+    <userId.Provider value={{ userid, cart, setCart, getUserID, setUserID }}>
       {children}
     </userId.Provider>
   );

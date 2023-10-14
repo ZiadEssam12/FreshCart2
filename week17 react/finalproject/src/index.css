@@ -98,6 +98,7 @@ a:hover {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
 /* Extra small devices (phones, less than 576px) */
 @media (max-width: 575.98px) {
   .footerSmallFont {
