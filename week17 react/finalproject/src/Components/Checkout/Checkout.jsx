@@ -1,14 +1,21 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useContext, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useContext, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { userContext } from "../../Context/UserContaxt";
+import toast from "react-hot-toast";
+import { userId } from "../../Context/UserIDContext";
 
 export default function Checkout() {
   const location = useLocation();
   let [loading, setLoading] = useState(false);
   let { totalCartPrice, cartOwner } = location.state;
+  let paymentOption1 = useRef();
+  let paymentOption2 = useRef();
+  const navigate = useNavigate();
+  let { userid, getUserID, setCart } = useContext(userId);
+
   let validationSchema = yup.object({
     details: yup.string().required("Details is required"),
     phone: yup
@@ -18,25 +25,35 @@ export default function Checkout() {
     city: yup.string().required("City is required"),
   });
   const { userToken } = useContext(userContext);
+  let url = "";
   async function handleSubmit(values) {
+    if (paymentOption1.current.checked) {
+      url = `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartOwner}?url=http://localhost:3000/`;
+    } else if (paymentOption2.current.checked) {
+      url = `https://ecommerce.routemisr.com/api/v1/orders/${cartOwner}`;
+    } else {
+      toast.error("Please Select Payment Method");
+      return;
+    }
+
     setLoading(true);
     await axios
-      .post(
-        `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartOwner}?url=https://ziadessam12.github.io/FreshCart2`,
-        values,
-        {
-          headers: {
-            token: userToken,
-          },
-        }
-      )
+      .post(url, values, {
+        headers: {
+          token: userToken,
+        },
+      })
       .then((res) => {
-        window.location.href = res.data.session.url;
+        if (paymentOption1.current.checked)
+          window.location.href = res.data.session.url;
+        else {
+          setCart([]);
+          navigate("/allOrders");
+        }
         setLoading(false);
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err);
       });
   }
   const formik = useFormik({
@@ -99,7 +116,31 @@ export default function Checkout() {
           {formik.touched.city && formik.errors.city ? (
             <div className="text-danger mb-4">{formik.errors.city}</div>
           ) : null}
-
+          <div className="d-flex flex-column flex-md-row  my-3 gap-3">
+            <div>
+              <span className="">Payment Method</span>
+            </div>
+            <input
+              className="form-check-input checked"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault1"
+              ref={paymentOption1}
+            />
+            <label className="form-check-label" htmlFor="flexRadioDefault1">
+              Credit Card
+            </label>
+            <input
+              className="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault2"
+              ref={paymentOption2}
+            />
+            <label className="form-check-label" htmlFor="flexRadioDefault2">
+              Cash on delevery
+            </label>
+          </div>
           <div className="d-flex justify-content-between">
             <h2 className="h6 text-main">Total Price: {totalCartPrice}</h2>
 

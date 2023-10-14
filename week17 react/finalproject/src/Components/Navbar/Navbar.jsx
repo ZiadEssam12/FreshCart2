@@ -55,23 +55,12 @@ export default function Navbar() {
                   Brands
                 </Link>
               </li>
-              {!userid ? (
-                <div
-                  className="ms-3 spinner-border text-main"
-                  role="status"
-                  id="spinner"
-                >
-                  <span className="visually-hidden">
-                    <i className="fas fa-spinner fa-spin position-absolute fa-3x"></i>
-                  </span>
-                </div>
-              ) : (
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/allOrders"}>
-                    Orders
-                  </Link>
-                </li>
-              )}
+
+              <li className="nav-item">
+                <Link className="nav-link" to={"/allOrders"}>
+                  Orders
+                </Link>
+              </li>
             </ul>
           ) : null}
           <ul className="navbar-nav list-unstyled me-4 ms-auto mt-2 mt-lg-0 d-flex flex-column flex-md-row">

@@ -8,10 +8,12 @@ export default function AllOrders() {
   let [orders, setOrders] = useState([]);
   let { userid, getUserID } = useContext(userId);
   let [loading, setLoading] = useState(false);
-  // let userToken = Cookies.get("userToken");
+
+  useEffect(() => {
+    setLoading(true);
+  }, []);
   useEffect(() => {
     if (userid) {
-      setLoading(true);
       getAllOrders();
     }
   }, [userid]);
@@ -46,6 +48,7 @@ export default function AllOrders() {
           <div className="row justify-content-center align-items-center row-gap-2 mt-3">
             {orders.map((order) => (
               <div className="my-3 bg-main-light shadow-sm p-4" key={order.id}>
+                <p>Items Count {order?.cartItems?.length}</p>
                 <h2 className="h5 d-flex justify-content-between font-16">
                   <span className="text-main">
                     Total Order Price {order?.totalOrderPrice} EGP
